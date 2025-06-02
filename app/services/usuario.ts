@@ -1,6 +1,5 @@
 import { computed, signal } from "@preact/signals-react";
-import { useContext, useState, type Context } from "react";
-import type { DiaSemHorario } from "~/models/dia-sem-horario";
+import { DiaSemHorario } from "~/models/dia-sem-horario";
 
 export interface Usuario {
   id: string;
@@ -47,7 +46,7 @@ function getLocalStorage(): Usuario[] {
         sobrenome: u.sobrenome,
         telefone: u.telefone,
         documento: u.documento,
-        data_nasc: u.data_nasc,
+        data_nasc: new DiaSemHorario(u.data_nasc),
         senha: u.senha,
       });
     } catch (e) {
@@ -71,17 +70,30 @@ const newUsuario = (user: CreateUsuario, senha: string) => {
     CHAVE_STORAGE,
     JSON.stringify([
       ...usuarios.value,
-      {
+      <UsuarioStorage>{
         ...user,
+        senha: senha,
         id: crypto.randomUUID(),
       },
     ])
   );
 };
 
+const removeUsuario = (id: string): Usuario | null => {
+  const removidoIndex = usuarios.value.findIndex((u) => u.id === id);
+  if (removidoIndex < 0) {
+    return null;
+  }
+  const newUsuarios = [...usuarios.value];
+  const removido = newUsuarios.splice(removidoIndex, 1);
+  localStorage.setItem(CHAVE_STORAGE, JSON.stringify(newUsuarios));
+  return removido[0];
+};
+
 export function useUsuarios() {
   return {
     usuarios: computed(() => usuarios.value),
     newUsuario,
+    removeUsuario,
   };
 }
