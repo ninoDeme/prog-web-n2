@@ -1,6 +1,9 @@
 import { useUsuarios } from "~/services/usuario";
 import type { Route } from "./+types/home";
-import { Container, Table } from "@mui/material";
+import { Container, IconButton, Paper } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import CardUsuario from "~/components/CardUsuario";
+import { NavLink } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,8 +13,22 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  let { usuarios } = useUsuarios();
-  return <Container>
-    <Table></Table>
-  </Container>;
+  let { usuarios, removeUsuario } = useUsuarios();
+  return (
+    <Container>
+      <h1>
+        Usuários
+        <NavLink to="/novo-usuario">
+          <IconButton color="primary">
+            <Add></Add>
+          </IconButton>
+        </NavLink>
+      </h1>
+      <Paper className="usuarios">
+        {usuarios.value.map((u) => (
+          <CardUsuario key={u.id} usuario={u} onDelete={() => removeUsuario(u.id)} />
+        ))}
+      </Paper>
+    </Container>
+  );
 }
