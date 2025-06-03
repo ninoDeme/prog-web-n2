@@ -7,7 +7,6 @@ export interface Usuario {
   nome: string;
   sobrenome: string;
   telefone: string;
-  documento: string;
   data_nasc: DiaSemHorario;
 }
 
@@ -45,7 +44,6 @@ function getLocalStorage(): Usuario[] {
         nome: u.nome,
         sobrenome: u.sobrenome,
         telefone: u.telefone,
-        documento: u.documento,
         data_nasc: new DiaSemHorario(u.data_nasc),
         senha: u.senha,
       });

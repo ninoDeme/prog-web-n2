@@ -1,13 +1,17 @@
+import { useUsuarios } from "~/services/usuario";
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { Container, Table } from "@mui/material";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "N2 Usuários!" },
+    { name: "description", content: "Trabalho N2 Prog Web" },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  let { usuarios } = useUsuarios();
+  return <Container>
+    <Table></Table>
+  </Container>;
 }
