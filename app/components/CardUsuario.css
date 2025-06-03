@@ -1,0 +1,26 @@
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.card-usuario {
+  gap: 4px;
+  padding: 4px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.flex-1 {
+  flex: 1 1 0;
+}
